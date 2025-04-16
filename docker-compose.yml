@@ -15,7 +15,7 @@ services:
 
   app:
     build: .
-    container_name: vjezba2-app
+    container_name: poll-app
     depends_on:
       - mysql
     ports:

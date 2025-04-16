@@ -1,0 +1,78 @@
+name: CI - Build and Test
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  build:
+    name: Build with Maven
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Build app (skip tests)
+        run: mvn clean package -DskipTests
+
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: build  # 🔗 This connects test → after build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Run tests
+        run: mvn test -Dspring.profiles.active=test
+
+  deploy:
+    name: Deploy via SSH
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Remote Server via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: 45.91.92.178
+          username: jakov
+          key: ${{ secrets.SSH_PRIVATE_KEY_COGIFY_SERVER }}
+          script: |
+            set -e
+            echo "➡ Pulling latest code"
+            cd /home/jakov/app  # 📌 Update to actual project folder on the server
+            if [ ! -d "app/.git" ]; then
+              echo "📥 Cloning repository"
+              git clone git@github.com:Jakov992/poll.git app
+            else
+              echo "🔄 Pulling latest changes"
+              cd app
+              git pull origin master
+            fi
+
+            echo "🐳 Building and running with Docker Compose"
+            docker compose down --remove-orphans
+            docker compose build
+            docker compose up -d
+
+            echo "✅ Deployed successfully!"

@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.jakov</groupId>
-    <artifactId>vjezba2</artifactId>
+    <artifactId>poll</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>vjezba2</name>
-    <description>vjezba2</description>
+    <name>poll</name>
+    <description>poll</description>
     <url/>
     <licenses>
         <license/>
@@ -55,7 +55,7 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.24.2</version> <!-- or latest -->
+            <version>3.24.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -67,11 +67,24 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>1.18.30</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>5.17.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.27.3</version> <!-- Use latest -->
             <scope>test</scope>
         </dependency>
     </dependencies>
