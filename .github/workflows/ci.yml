@@ -64,6 +64,7 @@ jobs:
             if [ ! -d "app/.git" ]; then
               echo "📥 Cloning repository"
               git clone git@github.com:Jakov992/poll.git app
+              cd app
             else
               echo "🔄 Pulling latest changes"
               cd app
