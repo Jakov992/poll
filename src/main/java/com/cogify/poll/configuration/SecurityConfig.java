@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -37,7 +36,7 @@ import static java.util.stream.Collectors.toSet;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 @Profile("!test")
-public class Security {
+public class SecurityConfig {
 
     private final PoolAccessDeniedHandler accessDeniedHandler;
 
@@ -73,8 +72,6 @@ public class Security {
         cfg.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
         cfg.setAllowedHeaders(List.of("Authorization","Content-Type"));
         cfg.setAllowCredentials(true);
-
-        System.out.println("Tu smo!!!!!");
 
         var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", cfg);

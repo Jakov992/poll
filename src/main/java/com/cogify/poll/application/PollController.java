@@ -9,6 +9,7 @@ import com.cogify.poll.domain.PollService;
 import com.cogify.poll.domain.VoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ public class PollController {
     private final PollDtoMapper pollDtoMapper;
 
     @PostMapping
+    @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<PollResponseDto> create(@RequestBody PollRequestDto pollDto) {
         Poll poll = pollDtoMapper.toDomain(pollDto);
         Poll created = pollService.createPoll(poll);
@@ -32,6 +34,7 @@ public class PollController {
     }
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<PollResponseDto>> getAll() {
         List<PollResponseDto> dtoList = pollService.getPolls().stream()
                 .map(pollDtoMapper::toDto)
@@ -40,6 +43,7 @@ public class PollController {
     }
 
     @PostMapping("/{pollId}/vote")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<PollResponseDto> voteOnPoll(
             @PathVariable Long pollId,
             @RequestBody VoteRequestDto request,

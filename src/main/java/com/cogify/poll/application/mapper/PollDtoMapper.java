@@ -51,11 +51,4 @@ public class PollDtoMapper {
                 .text(dto.text())
                 .build();
     }
-
-    public Vote toDomain(VoteResponseDto dto) {
-        return Vote.builder()
-                .id(dto.id())
-                .userId(dto.userId())
-                .build();
-    }
 }
