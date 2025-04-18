@@ -10,6 +10,6 @@ import lombok.*;
 @ToString
 public class Vote {
     private final Long id;
-    private final Long userId;
+    private final String userId;
     private Long optionId;
 }

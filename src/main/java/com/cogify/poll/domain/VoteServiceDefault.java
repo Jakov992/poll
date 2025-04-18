@@ -15,7 +15,7 @@ public class VoteServiceDefault implements VoteService {
     private final PollRepository pollRepository;
 
     @Override
-    public Poll vote(Long pollId, Long optionId, Long userId) {
+    public Poll vote(Long pollId, Long optionId, String userId) {
         Poll poll = pollRepository.get(pollId).orElseThrow(PollDoesntExistException::new);
 
         // Remove the user's previous votes from all options

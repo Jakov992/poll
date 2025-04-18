@@ -1,6 +1,7 @@
 package com.cogify.poll.application;
 
-import com.cogify.poll.application.dto.PollDto;
+import com.cogify.poll.application.dto.PollRequestDto;
+import com.cogify.poll.application.dto.PollResponseDto;
 import com.cogify.poll.application.dto.VoteRequestDto;
 import com.cogify.poll.application.mapper.PollDtoMapper;
 import com.cogify.poll.domain.Poll;
@@ -8,6 +9,8 @@ import com.cogify.poll.domain.PollService;
 import com.cogify.poll.domain.VoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,26 +25,29 @@ public class PollController {
     private final PollDtoMapper pollDtoMapper;
 
     @PostMapping
-    public ResponseEntity<PollDto> create(@RequestBody PollDto pollDto) {
+    public ResponseEntity<PollResponseDto> create(@RequestBody PollRequestDto pollDto) {
         Poll poll = pollDtoMapper.toDomain(pollDto);
         Poll created = pollService.createPoll(poll);
         return ResponseEntity.ok(pollDtoMapper.toDto(created));
     }
 
     @GetMapping
-    public ResponseEntity<List<PollDto>> getAll() {
-        List<PollDto> dtoList = pollService.getPolls().stream()
+    public ResponseEntity<List<PollResponseDto>> getAll() {
+        List<PollResponseDto> dtoList = pollService.getPolls().stream()
                 .map(pollDtoMapper::toDto)
                 .toList();
         return ResponseEntity.ok(dtoList);
     }
 
     @PostMapping("/{pollId}/vote")
-    public ResponseEntity<PollDto> voteOnPoll(
+    public ResponseEntity<PollResponseDto> voteOnPoll(
             @PathVariable Long pollId,
-            @RequestBody VoteRequestDto request
+            @RequestBody VoteRequestDto request,
+            @AuthenticationPrincipal Jwt jwt
     ) {
-        Poll updatedPoll = voteService.vote(pollId, request.optionId(), request.userId());
+        String userId = jwt.getSubject();
+
+        Poll updatedPoll = voteService.vote(pollId, request.optionId(), userId);
         return ResponseEntity.ok(pollDtoMapper.toDto(updatedPoll));
     }
 }

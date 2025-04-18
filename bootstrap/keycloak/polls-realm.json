@@ -1,0 +1,26 @@
+{
+  "id": "poll",
+  "realm": "polls",
+  "enabled": true,
+  "displayName": "Poll Realm",
+  "users": [],
+  "clients": [
+    {
+      "clientId": "poll",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "redirectUris": ["http://localhost:3000/*"]
+    }
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "ADMIN"
+      },
+      {
+        "name": "USER"
+      }
+    ]
+  }
+}

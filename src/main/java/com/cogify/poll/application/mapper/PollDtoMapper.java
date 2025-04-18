@@ -1,8 +1,6 @@
 package com.cogify.poll.application.mapper;
 
-import com.cogify.poll.application.dto.OptionDto;
-import com.cogify.poll.application.dto.PollDto;
-import com.cogify.poll.application.dto.VoteDto;
+import com.cogify.poll.application.dto.*;
 import com.cogify.poll.domain.Option;
 import com.cogify.poll.domain.Poll;
 import com.cogify.poll.domain.Vote;
@@ -13,8 +11,8 @@ import java.util.List;
 @Component
 public class PollDtoMapper {
 
-    public PollDto toDto(Poll poll) {
-        return new PollDto(
+    public PollResponseDto toDto(Poll poll) {
+        return new PollResponseDto(
                 poll.getId(),
                 poll.getTitle(),
                 poll.getDescription(),
@@ -24,8 +22,8 @@ public class PollDtoMapper {
         );
     }
 
-    public OptionDto toDto(Option option) {
-        return new OptionDto(
+    public OptionResponseDto toDto(Option option) {
+        return new OptionResponseDto(
                 option.getId(),
                 option.getText(),
                 option.getVotes() != null
@@ -34,13 +32,12 @@ public class PollDtoMapper {
         );
     }
 
-    public VoteDto toDto(Vote vote) {
-        return new VoteDto(vote.getId(), vote.getUserId());
+    public VoteResponseDto toDto(Vote vote) {
+        return new VoteResponseDto(vote.getId(), vote.getUserId());
     }
 
-    public Poll toDomain(PollDto dto) {
+    public Poll toDomain(PollRequestDto dto) {
         return Poll.builder()
-                .id(dto.id())
                 .title(dto.title())
                 .description(dto.description())
                 .options(dto.options() != null
@@ -49,17 +46,13 @@ public class PollDtoMapper {
                 .build();
     }
 
-    public Option toDomain(OptionDto dto) {
+    public Option toDomain(OptionRequestDto dto) {
         return Option.builder()
-                .id(dto.id())
                 .text(dto.text())
-                .votes(dto.votes() != null
-                        ? dto.votes().stream().map(this::toDomain).toList()
-                        : List.of())
                 .build();
     }
 
-    public Vote toDomain(VoteDto dto) {
+    public Vote toDomain(VoteResponseDto dto) {
         return Vote.builder()
                 .id(dto.id())
                 .userId(dto.userId())

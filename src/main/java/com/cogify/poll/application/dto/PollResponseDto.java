@@ -2,9 +2,9 @@ package com.cogify.poll.application.dto;
 
 import java.util.List;
 
-public record PollDto(
+public record PollResponseDto(
         Long id,
         String title,
         String description,
-        List<OptionDto> options
+        List<OptionResponseDto> options
 ) {}

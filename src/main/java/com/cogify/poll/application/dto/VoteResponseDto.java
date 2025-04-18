@@ -1,6 +1,6 @@
 package com.cogify.poll.application.dto;
 
-public record VoteDto(
+public record VoteResponseDto(
     Long id,
-    Long userId
+    String userId
 ) {}

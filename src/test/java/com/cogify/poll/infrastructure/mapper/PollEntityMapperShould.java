@@ -20,7 +20,7 @@ class PollEntityMapperShould {
     void map_poll_entity_to_domain_poll() {
         VoteEntity voteEntity = VoteEntity.builder()
                 .id(1L)
-                .userId(10L)
+                .userId("10L")
                 .build();
 
         OptionEntity optionEntity = OptionEntity.builder()
@@ -50,14 +50,14 @@ class PollEntityMapperShould {
         Option option = domain.getOptions().get(0);
         assertThat(option.getText()).isEqualTo("Option A");
         assertThat(option.getVotes()).hasSize(1);
-        assertThat(option.getVotes().get(0).getUserId()).isEqualTo(10L);
+        assertThat(option.getVotes().get(0).getUserId()).isEqualTo("10L");
     }
 
     @Test
     void map_domain_poll_to_poll_entity() {
         Vote vote = Vote.builder()
                 .id(1L)
-                .userId(10L)
+                .userId("10L")
                 .optionId(2L)
                 .build();
 
@@ -85,6 +85,6 @@ class PollEntityMapperShould {
         OptionEntity opt = entity.getOptions().get(0);
         assertThat(opt.getText()).isEqualTo("Option A");
         assertThat(opt.getVotes()).hasSize(1);
-        assertThat(opt.getVotes().get(0).getUserId()).isEqualTo(10L);
+        assertThat(opt.getVotes().get(0).getUserId()).isEqualTo("10L");
     }
 }

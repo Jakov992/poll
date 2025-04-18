@@ -30,7 +30,7 @@ class VoteServiceDefaultShould {
     void replaceUserVoteWithNewVote() {
         // Given
         Long pollId = 1L;
-        Long userId = 42L;
+        String userId = "sgrdfgf-462354-45634rfgsd";
         Long previousOptionId = 10L;
         Long selectedOptionId = 20L;
 
@@ -72,7 +72,7 @@ class VoteServiceDefaultShould {
         given(pollRepository.get(pollId)).willReturn(Optional.empty());
 
         // When / Then
-        assertThatThrownBy(() -> voteService.vote(pollId, 1L, 1L))
+        assertThatThrownBy(() -> voteService.vote(pollId, 1L, "not-found"))
                 .isInstanceOf(PollDoesntExistException.class);
     }
 }

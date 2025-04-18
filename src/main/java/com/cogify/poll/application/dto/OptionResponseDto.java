@@ -2,8 +2,8 @@ package com.cogify.poll.application.dto;
 
 import java.util.List;
 
-public record OptionDto(
+public record OptionResponseDto(
         Long id,
         String text,
-        List<VoteDto> votes
+        List<VoteResponseDto> votes
 ) {}
