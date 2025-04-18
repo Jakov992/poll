@@ -13,7 +13,10 @@ const Dashboard: React.FC = () => {
         <div className="min-h-screen bg-gray-50">
             <header className="bg-white shadow-md">
                 <div className="container mx-auto flex justify-between items-center p-4">
-                    <h1 className="text-2xl font-bold text-gray-800">🗳️ Poll Dashboard</h1>
+                    <h1 className="text-2xl font-bold text-gray-800 flex items-center space-x-2">
+                        <img src="/cogify.png" alt="Logo" className="h-8 w-8" />
+                        <span>Poll Dashboard</span>
+                    </h1>
 
                     <div className="flex items-center gap-4">
                         {isAdmin && (

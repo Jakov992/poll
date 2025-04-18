@@ -10,7 +10,10 @@ const AdminDashboard: React.FC = () => {
         <div className="min-h-screen bg-gray-50">
             <header className="bg-white shadow-md">
                 <div className="container mx-auto flex justify-between items-center p-4">
-                    <h1 className="text-2xl font-bold text-gray-800">🛠️ Admin Dashboard</h1>
+                    <div className="flex items-center space-x-2">
+                        <img src="/cogify.png" alt="Dashboard Icon" className="w-8 h-8" />
+                        <h1 className="text-2xl font-bold text-gray-800">Admin Dashboard</h1>
+                    </div>
 
                     <div className="flex items-center gap-4">
                         <button
